@@ -3,6 +3,9 @@
 Dit project draait om de ontwikkeling van een toegankelijke annotatietool, specifiek ontworpen vanuit de principes van Human Centered Design voor Roger. Roger is een filosoof met maculadegeneratie die volledig afhankelijk is van een screenreader. Zijn wens is filosofische teksten lezen en per zin aantekeningen kunnen maken in de vorm van tekst of spraakopnames.
 
 ## Maandag 30/03
+<img width="1321" height="791" alt="image" src="https://github.com/user-attachments/assets/9090f089-7061-4faa-9df5-a220fa8d6236" />
+
+<img width="1317" height="796" alt="image" src="https://github.com/user-attachments/assets/074d8ce8-ab7c-4069-9797-27189796e143" />
 
 ![Top of Webpage](image.png)
 Vandaag heb ik het fundement van deze tool neergezet. Aangezien ik Roger nog niet heb ontmoet, heb ik nog niet zijn persoonlijke functies of wensen kunnen toevoegen. Maar ik heb met een aantal aannames wel wat navigatie shortcuts geimplementeerd en design keuzes gemaakt.
