@@ -7,7 +7,7 @@
 }
 
 
-
+ 
 
 /* ── MARK: Screenreader-only */
 .sr-only {
@@ -56,7 +56,7 @@ body {
 }
 
 /* ── MARK: Header */
-header {
+#controls {
   background: #f0f0ec;
   border-bottom: 1px solid #ccc;
   padding: 0.5rem 2rem;
@@ -65,7 +65,7 @@ header {
   color: #444;
 }
 
-header kbd {
+#controls kbd {
   display: inline-block;
   padding: 0.1em 0.4em;
   background: #fff;

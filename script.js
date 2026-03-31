@@ -3,14 +3,14 @@ const annotatiesSectie = document.getElementById('notes');
 const annotatieLijst   = document.getElementById('annotation-list');
 const liveRegio        = document.getElementById('live-region');
 
-let zinnen         = [];   // alle zin-elementen
-let actieveZin     = null; // de momenteel gemarkeerde zin in de tekst
-let actieveKaart   = null; // de momenteel gemarkeerde kaart in de annotaties
+let zinnen         = [];   
+let actieveZin     = null; 
+let actieveKaart   = null; 
 let huidigScherm   = 'tekst';
 let onthoudenzin   = null;
 
 
-// ── Zinnen splitsen ───────────────────────────────────────────────────────────
+// ── Zinnen splitsen 
 
 function maakZinnen() {
   const alineas = Array.from(tekstArtikel.querySelectorAll('p:not(.text-meta)'));
@@ -37,14 +37,30 @@ function maakZinnen() {
     zin.id = 'zin-' + i;
   });
 
+  var titel  = tekstArtikel.querySelector('h1').textContent.trim();
+  var auteur = tekstArtikel.querySelector('.text-meta').textContent.split('·')[0].trim();
+  var hoofdElement = document.querySelector('main');
+  hoofdElement.setAttribute('role', 'none');
+  hoofdElement.setAttribute('aria-label', titel + ' by ' + auteur + ",");
+
   tekstArtikel.setAttribute('role', 'application');
+  tekstArtikel.setAttribute('aria-roledescription', 'literature');
   tekstArtikel.setAttribute('tabindex', '0');
-//   tekstArtikel.setAttribute('aria-label', 'Text — use arrow keys to navigate sentences, Enter to annotate');
   tekstArtikel.addEventListener('keydown', handleTekstToets);
 
   if (zinnen.length > 0) {
-    activeerZin(zinnen[0]);
+    actieveZin = zinnen[0];
+    zinnen[0].classList.add('active');
   }
+
+  tekstArtikel.addEventListener('focus', function () {
+    if (actieveZin) {
+      liveRegio.textContent = '';
+      setTimeout(function () {
+        liveRegio.textContent = actieveZin.textContent;
+      }, 50);
+    }
+  });
 }
 
 
@@ -92,7 +108,6 @@ function handleTekstToets(e) {
 function initAnnotatiesNavigatie() {
   annotatiesSectie.setAttribute('role', 'application');
   annotatiesSectie.setAttribute('tabindex', '0');
-//   annotatiesSectie.setAttribute('aria-label', 'Annotations — use arrow keys to navigate, Enter to edit');
   annotatiesSectie.addEventListener('keydown', handleAnnotatieToets);
 }
 
@@ -139,7 +154,7 @@ annotatiesSectie.addEventListener('focus', function () {
     activeerKaart(kaarten[0]);
   }
   if (kaarten.length > 0 && actieveKaart) {
-    activeerKaart(actieveKaart); // highlight terugzetten na terugkeer
+    activeerKaart(actieveKaart); 
   }
 });
 
@@ -156,7 +171,7 @@ const recordStatus    = document.getElementById('record-status');
 
 let mediaRecorder  = null;
 let audioChunks    = [];
-let opgenomenAudio = null; // de opgenomen audio als base64 string
+let opgenomenAudio = null; 
 
 // ── Spraakopname 
 
@@ -212,7 +227,6 @@ function resetOpname() {
   recordStatus.textContent = '';
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 
 function openAnnotatieVenster() {
   dialoogZinTekst.textContent = actieveZin.textContent;

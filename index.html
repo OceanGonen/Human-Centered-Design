@@ -4,26 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Annotation tool — On the Nature of the Self</title>
+  <title>Annotation tool for Roger</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <nav aria-label="Skip to section">
-    <a class="skip-link" href="#text">Skip to text</a>
-    <a class="skip-link" href="#notes">Skip to annotations</a>
-  </nav>
-
-  <div id="live-region" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
-
-  <header>
+  <div id="controls">
+    <p>Controls:</p>
     <p>Press <kbd>Alt</kbd> + <kbd>A</kbd> to switch between the literature and your annotations.</p>
+    <p>Use the <kbd>ArrowKeys</kbd> to navigate each sentence.</p>
     <p>Press <kbd>Enter</kbd> on a sentence to add an annotation.</p>
-  </header>
+  </div>
 
   <div class="layout">
-    <main>
+    <main aria-label="literature">
       <article id="text">
         <h1>On the Nature of the Self</h1>
         <p class="text-meta">David Hume · A Treatise of Human Nature, Book I</p>
@@ -43,9 +38,9 @@
       </article>
     </main>
 
-    <section id="sidebar">
+    <section id="sidebar" aria-hidden="true">
       <div id="notes" aria-labelledby="notes-heading">
-        <h2 id="notes-heading" tabindex="-1">Annotations</h2>
+        <h2 id="notes-heading">Annotations</h2>
         <ul id="annotation-list" aria-label="Your annotations">
           <li>No annotations yet.</li>
         </ul>
@@ -64,11 +59,11 @@
       <div class="form-group">
         <label for="note">Your note</label>
         <textarea id="note" name="note" rows="4" aria-describedby="note-hint"></textarea>
-        <p id="note-hint" class="hint">Type your note below.</p>
+        <p id="note-hint" class="hint">Type your note or record your voice below.</p>
       </div>
 
       <div class="form-group">
-        <button type="button" id="record-btn">Record voice note</button>
+        <button type="button" id="record-btn">Record voice </button>
         <p id="record-status" aria-live="polite" class="hint"></p>
       </div>
 
@@ -78,6 +73,8 @@
       </div>
     </form>
   </dialog>
+
+  <div id="live-region" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
   <script src="script.js"></script>
 </body>
