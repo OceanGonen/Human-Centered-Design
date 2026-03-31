@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annotation tool — On the Nature of the Self</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav aria-label="Skip to section">
+    <a class="skip-link" href="#text">Skip to text</a>
+    <a class="skip-link" href="#notes">Skip to annotations</a>
+  </nav>
+
+  <div id="live-region" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <header>
+    <p>Press <kbd>Alt</kbd> + <kbd>A</kbd> to switch between the literature and your annotations.</p>
+    <p>Press <kbd>Enter</kbd> on a sentence to add an annotation.</p>
+  </header>
+
+  <div class="layout">
+    <main>
+      <article id="text">
+        <h1>On the Nature of the Self</h1>
+        <p class="text-meta">David Hume · A Treatise of Human Nature, Book I</p>
+
+        <p>
+          There are some philosophers who imagine we are every moment intimately conscious of what we call our self.
+          They believe we feel its existence and its continuance in existence with the utmost certainty.
+          But for my part, when I enter most intimately into what I call myself, I always stumble on some particular perception or other: of heat or cold, light or shade, love or hatred, pain or pleasure.
+          I never can catch myself at any time without a perception, and can never observe any thing but the perception.
+        </p>
+
+        <p>
+          The mind is a kind of theatre, where several perceptions successively make their appearance, pass, repass, glide away, and mingle in an infinite variety of postures and situations.
+          There is properly no simplicity in it at one time, nor identity in different times, however much we may be naturally inclined to imagine that simplicity and identity.
+          The comparison of the theatre must not mislead us: it is nothing but a bundle of different perceptions which constitute the mind.
+        </p>
+      </article>
+    </main>
+
+    <section id="sidebar">
+      <div id="notes" aria-labelledby="notes-heading">
+        <h2 id="notes-heading" tabindex="-1">Annotations</h2>
+        <ul id="annotation-list" aria-label="Your annotations">
+          <li>No annotations yet.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <dialog id="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-sentence">
+    <h2 id="dialog-title">Add annotation</h2>
+
+    <p class="sr-only" id="sentence-label">Selected sentence:</p>
+    <blockquote id="dialog-sentence" aria-labelledby="sentence-label"></blockquote>
+
+    <form id="annotation-form" novalidate>
+      <div class="form-group">
+        <label for="note">Your note</label>
+        <textarea id="note" name="note" rows="4" aria-describedby="note-hint"></textarea>
+        <p id="note-hint" class="hint">Type your note below.</p>
+      </div>
+
+      <div class="form-group">
+        <button type="button" id="record-btn">Record voice note</button>
+        <p id="record-status" aria-live="polite" class="hint"></p>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" id="save-btn" aria-label="Save annotation">Save</button>
+        <button type="button" id="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

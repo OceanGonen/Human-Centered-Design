@@ -1,0 +1,359 @@
+:root{
+    --main-highlight-color: #005fcc;
+    --main-highlight-color-hover: #0047a3;
+    --main-active-color: #fff3b0; 
+
+    --sidebar-background: #f5f4f0;
+}
+
+
+
+
+/* ── MARK: Screenreader-only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── MARK: Basis  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #1a1a1a;
+  background: #faf9f7;
+}
+
+/* ── MARK: Skip links */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--main-highlight-color);
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── MARK: Header */
+header {
+  background: #f0f0ec;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem 2rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: #444;
+}
+
+header kbd {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+/* ── MARK: Layout  */
+.layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0;
+  min-height: calc(100vh - 4rem);
+}
+
+main {
+  padding: 2rem;
+  border-right: 1px solid #d8d5d0;
+  overflow-y: auto;
+}
+
+#notes {
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 4rem); 
+  overflow-y: auto;
+  background: var(sidebar-background);
+}
+
+/* ── MARK: Tekst  */
+article h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.text-meta {
+  font-size: 0.9rem;
+  color: #666;
+  font-family: system-ui, sans-serif;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+/* ── MARK: Literatuur veld */
+#text:focus {
+  outline: 3px solid var(--main-highlight-color);
+  outline-offset: 10px;
+  border-radius: 3px ;
+}
+
+/* ── MARK: Zinnen  */
+.sentence {
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  padding: 0.3rem 0.75rem;
+  margin: 0;
+  border-radius: 0 3px 3px 0;
+  transition: background 0.1s;
+}
+
+.sentence:hover {
+  background: #dcdbd9;
+}
+
+/* Actieve zin: gele achtergrond + blauwe streep links */
+/* Werkt via JS-class, niet :focus — zodat het ook met screenreader zichtbaar is */
+.sentence.active {
+  background: var(--main-active-color);
+  border-left-color: var(--main-highlight-color);
+}
+
+/* Al geannoteerd: blauwe stippellijn onderaan */
+.sentence.annotated {
+  border-bottom: 2px dashed var(--main-highlight-color);
+}
+
+.sentence.active.annotated {
+  border-bottom: 2px solid var(--main-highlight-color);
+}
+
+/* ── MARK: Annotaties sectie  */
+#sidebar{
+    padding: 2rem;
+    background-color: var(--sidebar-background);
+}
+
+#notes:focus {
+  outline: 3px solid var(--main-highlight-color);
+  outline-offset: 2px;
+  border-radius: 10px ;
+}
+
+#notes h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
+
+#annotation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.annotation-zin {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  border-left: 3px solid var(--main-highlight-color);
+  padding-left: 0.5rem;
+  margin: 0 0 0.5rem;
+}
+
+.annotation-card {
+  background: #fff;
+  border: 1px solid #d8d5d0;
+  /* border-left: 4px solid var(--main-highlight-color); */
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+
+.annotation-card.active {
+  outline: 3px solid var(--main-highlight-color);
+  outline-offset: 2px;
+  background-color: var(--main-active-color);
+}
+
+.annotation-card h3 {
+  font-size: 0.95rem;
+  font-family: system-ui, sans-serif;
+  margin: 0 0 0.25rem;
+}
+
+.annotation-card h3 a {
+  color: var(--main-highlight-color);
+  text-decoration: none;
+}
+.annotation-card h3 a:hover,
+.annotation-card h3 a:focus {
+  text-decoration: underline;
+}
+
+.annotation-date {
+  font-size: 0.8rem;
+  color: #888;
+  font-family: system-ui, sans-serif;
+  margin: 0 0 0.5rem;
+}
+
+.annotation-text {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+}
+
+.annotation-card audio {
+  display: block;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+/* ── MARK: Dialoog  */
+dialog {
+  max-width: 38rem;
+  width: 92%;
+  padding: 2rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  background: #fff;
+  font-family: system-ui, sans-serif;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+dialog h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+#dialog-sentence {
+  background: #f5f4f0;
+  border-left: 4px solid var(--main-highlight-color);
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── MARK: Formulier  */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.form-group textarea {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.form-group textarea:focus {
+  outline: 3px solid var(--main-highlight-color);
+  outline-offset: 1px;
+}
+
+.hint {
+  font-size: 0.825rem;
+  color: #666;
+  margin: 0.35rem 0 0;
+}
+
+/* ── MARK: Knoppen  */
+button {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+  font-family: system-ui, sans-serif;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 3px solid var(--main-highlight-color);
+  outline-offset: 2px;
+}
+
+#save-btn {
+  background: var(--main-highlight-color);
+  color: #fff;
+  border-color: var(--main-highlight-color);
+}
+#save-btn:hover {
+  background: var(--main-highlight-color-hover);
+  border-color: var(--main-highlight-color-hover);
+}
+
+#cancel-btn {
+  background: #fff;
+  color: #1a1a1a;
+  border-color: #bbb;
+}
+#cancel-btn:hover {
+  background: #f5f4f0;
+}
+
+#record-btn {
+  background: #fff;
+  color: #cc2200;
+  border-color: #cc2200;
+}
+#record-btn:hover {
+  background: #fff5f3;
+}
+
+/* Tijdens opname: rode achtergrond als visuele waarschuwing */
+#record-btn[data-recording="true"] {
+  background: #cc2200;
+  color: #fff;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
