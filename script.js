@@ -147,6 +147,27 @@ function activeerKaart(kaart) {
   }, 50);
 }
 
+// ── Alt+A: wisselen 
+
+document.addEventListener('keydown', function (e) {
+  if (e.altKey && e.key === 'a') {
+    e.preventDefault();
+    wisselScherm();
+  }
+});
+
+function wisselScherm() {
+  if (huidigScherm === 'tekst') {
+    onthoudenzin = actieveZin;
+    huidigScherm = 'annotaties';
+    annotatiesSectie.focus();
+  } else {
+    huidigScherm = 'tekst';
+    if (onthoudenzin) activeerZin(onthoudenzin);
+    tekstArtikel.focus();
+  }
+}
+
 // Eerste kaart activeren zodra de sectie focus krijgt
 annotatiesSectie.addEventListener('focus', function () {
   var kaarten = Array.from(annotatieLijst.querySelectorAll('.annotation-card'));
@@ -173,6 +194,8 @@ let mediaRecorder  = null;
 let audioChunks    = [];
 let opgenomenAudio = null; 
 
+
+// BRON: Claude AI: <---
 // ── Spraakopname 
 
 recordKnop.addEventListener('click', function () {
@@ -323,28 +346,9 @@ function voegAnnotatieToe(zinTekst, notitie, audio) {
   annotatieLijst.appendChild(li);
   resetOpname();
 }
+// BRON: Claude AI: <--- end
 
 
-// ── Alt+A: wisselen 
-
-document.addEventListener('keydown', function (e) {
-  if (e.altKey && e.key === 'a') {
-    e.preventDefault();
-    wisselScherm();
-  }
-});
-
-function wisselScherm() {
-  if (huidigScherm === 'tekst') {
-    onthoudenzin = actieveZin;
-    huidigScherm = 'annotaties';
-    annotatiesSectie.focus();
-  } else {
-    huidigScherm = 'tekst';
-    if (onthoudenzin) activeerZin(onthoudenzin);
-    tekstArtikel.focus();
-  }
-}
 
 
 // ── Start 
