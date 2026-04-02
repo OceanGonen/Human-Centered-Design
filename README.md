@@ -33,3 +33,27 @@ Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplement
 - Alt + A: Snel schakelen tussen de tekst en de annotaties.
 
 
+## Dinsdag 31/03
+### 1ste User test met Roger (59) 
+
+**Belangrijkste Bevindingen**
+- Visuele Belasting: Hij kan een paar woorden lezen, maar dit kost veel energie en focus, is onprettig
+
+- Lichtgevoeligheid: Hij is gevoelig voor wit licht; Dark Mode voor gebruiksgemak.
+
+- Typen: Hij kan blind typen, maar het tempo ligt niet erg hoog.
+
+- Voorkeuren: Hij geeft de voorkeur aan een mobiel formaat en werkt graag met spraak-naar-tekst om notities te maken in plaats van audio-opnames.
+
+**Te Implementeren**
+
+- Dark Mode: Standaardinstelling om visuele vermoeidheid en overprikkeling te voorkomen.
+
+- Spraak-naar-tekst Integratie: Voor het efficiënt toevoegen van tekstuele notities zonder te hoeven typen.
+
+- Sortering: De mogelijkheid om annotaties terug te halen op boek en paginanummer.
+
+- Contextuele Annotaties: Elke annotatie wordt gekoppeld aan de specifieke zin in de literatuur. (Wanneer de gebruiker over een geannoteerde zin "hovert" (of deze selecteert), wordt direct zichtbaar dat er een notitie bij hoort)
+
+- Snelkoppelingen: Een directe shortcut vanuit de tekst naar de bijbehorende annotatie voor snelle navigatie.
+
