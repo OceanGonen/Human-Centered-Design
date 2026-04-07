@@ -70,5 +70,6 @@ Wilt u meerdere notities voor 1 zin kunnen hebben?
 
 <img width="1859" height="792" alt="image" src="https://github.com/user-attachments/assets/f608ded8-24a9-4975-bec8-d874135ce2e7" />
 
-
+per hoofdstuk indelen
+groter lettertype
 
