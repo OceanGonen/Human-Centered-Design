@@ -55,5 +55,17 @@ Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplement
 
 - Contextuele Annotaties: Elke annotatie wordt gekoppeld aan de specifieke zin in de literatuur. (Wanneer de gebruiker over een geannoteerde zin "hovert" (of deze selecteert), wordt direct zichtbaar dat er een notitie bij hoort)
 
-- Snelkoppelingen: Een directe shortcut vanuit de tekst naar de bijbehorende annotatie voor snelle navigatie.
+
+## Dinsdag 07/04
+
+<img width="1915" height="898" alt="image" src="https://github.com/user-attachments/assets/42d17039-9277-4417-8582-a9b8ff2ed9c2" />
+
+
+Wat wilt u dat er gebeurt als je op een geannoteerde zin weer op enter klikt?
+Hoe wilt udat geannoteerde zinnen gemarkeerd worden?
+Wilt u meerdere notities voor 1 zin kunnen hebben?
+
+<img width="1859" height="792" alt="image" src="https://github.com/user-attachments/assets/f608ded8-24a9-4975-bec8-d874135ce2e7" />
+
+
 
