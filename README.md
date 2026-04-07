@@ -27,7 +27,7 @@ Hier kan hij een tekstnotitie typen of een spraakbericht opnemen. Na het opslaan
 Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplementeerd:
 
 - Pijltjestoetsen: Navigeren door zinnen of annotatiekaarten.
-
+  
 - Enter: Annotatie creeren op een geselecteerde zin;  of een annotatie kaart openen om te bewerken.
 
 - Alt + A: Snel schakelen tussen de tekst en de annotaties.
@@ -60,9 +60,12 @@ Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplement
 
 <img width="1915" height="898" alt="image" src="https://github.com/user-attachments/assets/42d17039-9277-4417-8582-a9b8ff2ed9c2" />
 
+per jaar ingedeeld naar boeken 
+hij reist veel en wilt graag op mobiel kunnen gebruiken.
+
 
 Wat wilt u dat er gebeurt als je op een geannoteerde zin weer op enter klikt?
-Hoe wilt udat geannoteerde zinnen gemarkeerd worden?
+Hoe wilt u dat geannoteerde zinnen gemarkeerd worden?
 Wilt u meerdere notities voor 1 zin kunnen hebben?
 
 <img width="1859" height="792" alt="image" src="https://github.com/user-attachments/assets/f608ded8-24a9-4975-bec8-d874135ce2e7" />
