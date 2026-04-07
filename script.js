@@ -1,13 +1,13 @@
-const tekstArtikel     = document.getElementById('text');
+const tekstArtikel = document.getElementById('text');
 const annotatiesSectie = document.getElementById('notes');
-const annotatieLijst   = document.getElementById('annotation-list');
-const liveRegio        = document.getElementById('live-region');
+const annotatieLijst = document.getElementById('annotation-list');
+const liveRegio = document.getElementById('live-region');
 
-let zinnen         = [];   
-let actieveZin     = null; 
-let actieveKaart   = null; 
-let huidigScherm   = 'tekst';
-let onthoudenzin   = null;
+let zinnen = [];
+let actieveZin = null;
+let actieveKaart = null;
+let huidigScherm = 'tekst';
+let onthoudenzin = null;
 
 
 // ── Zinnen splitsen 
@@ -17,8 +17,9 @@ function maakZinnen() {
 
   alineas.forEach(function (alinea) {
     const tekst = alinea.textContent.trim();
+    //BRON: Claude AI. match()
     const delen = tekst.match(/[^.!?]+[.!?]+\s*/g) || [tekst];
-
+    //BRON: Claude AI. maak de zinnen selecteerbaar
     const nieuweZinnen = delen
       .map(function (z) { return z.trim(); })
       .filter(function (z) { return z.length > 0; })
@@ -37,7 +38,7 @@ function maakZinnen() {
     zin.id = 'zin-' + i;
   });
 
-  var titel  = tekstArtikel.querySelector('h1').textContent.trim();
+  var titel = tekstArtikel.querySelector('h1').textContent.trim();
   var auteur = tekstArtikel.querySelector('.text-meta').textContent.split('·')[0].trim();
   var hoofdElement = document.querySelector('main');
   hoofdElement.setAttribute('role', 'none');
@@ -72,6 +73,7 @@ function activeerZin(zin) {
   }
   actieveZin = zin;
   zin.classList.add('active');
+  //BRON: Claude AI. focus de zinnen
   zin.scrollIntoView({ block: 'nearest' });
 
   liveRegio.textContent = '';
@@ -103,7 +105,7 @@ function handleTekstToets(e) {
 
 // ── Annotaties navigatie 
 // Zelfde patroon als tekst: de sectie is focusbaar,
-// pijltoetsen wisselen de actieve kaart, Enter opent de kaart.
+// pijltoetsen wisselen de actieve zin, Enter opent de annotatie dialoog.
 
 function initAnnotatiesNavigatie() {
   annotatiesSectie.setAttribute('role', 'application');
@@ -175,24 +177,24 @@ annotatiesSectie.addEventListener('focus', function () {
     activeerKaart(kaarten[0]);
   }
   if (kaarten.length > 0 && actieveKaart) {
-    activeerKaart(actieveKaart); 
+    activeerKaart(actieveKaart);
   }
 });
 
 
 // ── Nieuwe Annotatie venster 
 
-const dialoogElement  = document.getElementById('dialog');
+const dialoogElement = document.getElementById('dialog');
 const dialoogZinTekst = document.getElementById('dialog-sentence');
-const annuleerKnop    = document.getElementById('cancel-btn');
-const opslaanKnop     = document.getElementById('save-btn');
+const annuleerKnop = document.getElementById('cancel-btn');
+const opslaanKnop = document.getElementById('save-btn');
 const notitieTekstvak = document.getElementById('note');
-const recordKnop      = document.getElementById('record-btn');
-const recordStatus    = document.getElementById('record-status');
+const recordKnop = document.getElementById('record-btn');
+const recordStatus = document.getElementById('record-status');
 
-let mediaRecorder  = null;
-let audioChunks    = [];
-let opgenomenAudio = null; 
+let mediaRecorder = null;
+let audioChunks = [];
+let opgenomenAudio = null;
 
 
 // BRON: Claude AI: <---
@@ -243,8 +245,8 @@ function resetOpname() {
   if (mediaRecorder && mediaRecorder.state === 'recording') {
     mediaRecorder.stop();
   }
-  mediaRecorder  = null;
-  audioChunks    = [];
+  mediaRecorder = null;
+  audioChunks = [];
   opgenomenAudio = null;
   recordKnop.textContent = 'Record voice note';
   recordStatus.textContent = '';
@@ -319,7 +321,11 @@ function voegAnnotatieToe(zinTekst, notitie, audio) {
     annotatieLijst.removeChild(lege);
   }
 
-  var li      = document.createElement('li');
+    if (actieveZin) {
+    actieveZin.classList.add('annotated');
+  }
+
+  var li = document.createElement('li');
   var artikel = document.createElement('article');
   artikel.className = 'annotation-card';
 
