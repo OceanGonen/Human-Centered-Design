@@ -213,7 +213,11 @@ article h1 {
     background-repeat: no-repeat;
 }
 } 
-
+#page-nav{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
 .sentence.active.annotated {
 }
 

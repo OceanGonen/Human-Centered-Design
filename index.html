@@ -1,82 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Annotation tool for Roger</title>
+  <title>Annotation Tool for Roger</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body class="dark">
 
-  <div id="controls">
-    <p>Controls:</p>
-    <p>Press <kbd>Alt</kbd> + <kbd>A</kbd> to switch between the literature and your annotations.</p>
-    <p>Use the <kbd>ArrowKeys</kbd> to navigate each sentence.</p>
-    <p>Press <kbd>Enter</kbd> on a sentence to add an annotation.</p>
+  <div id="controls" role="region" aria-label="Keyboard shortcuts">
+    <p>Page navigation: <kbd>PageUp</kbd> / <kbd>PageDown</kbd> or <kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> (when text has focus)</p>
+    <p>Sentence navigation: <kbd>ArrowUp</kbd> / <kbd>ArrowDown</kbd></p>
+    <p>Add annotation: <kbd>Enter</kbd></p>
+    <p>Switch text / annotations: <kbd>Alt</kbd> + <kbd>A</kbd></p>
   </div>
 
   <div class="layout">
-    <main aria-label="literature">
+    <main aria-label="Reading area">
+
       <article id="text">
         <h1>On the Nature of the Self</h1>
         <p class="text-meta">David Hume · A Treatise of Human Nature, Book I</p>
 
-        <p>
-          There are some philosophers who imagine we are every moment intimately conscious of what we call our self.
-          They believe we feel its existence and its continuance in existence with the utmost certainty.
-          But for my part, when I enter most intimately into what I call myself, I always stumble on some particular perception or other: of heat or cold, light or shade, love or hatred, pain or pleasure.
-          I never can catch myself at any time without a perception, and can never observe any thing but the perception.
-        </p> 
+        <section class="page" data-page="1" data-chapter="I" aria-label="Chapter 1, page 1">
+          <p>
+            There are some philosophers who imagine we are every moment intimately conscious of what we call our self.
+            They believe we feel its existence and its continuance in existence with the utmost certainty.
+            But for my part, when I enter most intimately into what I call myself, I always stumble on some particular perception or other: of heat or cold, light or shade, love or hatred, pain or pleasure.
+            I never can catch myself at any time without a perception, and can never observe any thing but the perception.
+          </p>
+        </section>
 
-        <p>
-          The mind is a kind of theatre, where several perceptions successively make their appearance, pass, repass, glide away, and mingle in an infinite variety of postures and situations.
-          There is properly no simplicity in it at one time, nor identity in different times, however much we may be naturally inclined to imagine that simplicity and identity.
-          The comparison of the theatre must not mislead us: it is nothing but a bundle of different perceptions which constitute the mind.
-        </p>
+        <section class="page" data-page="2" data-chapter="I" aria-label="Chapter 1, page 2" hidden>
+          <p>
+            The mind is a kind of theatre, where several perceptions successively make their appearance, pass, repass, glide away, and mingle in an infinite variety of postures and situations.
+            There is properly no simplicity in it at one time, nor identity in different times, however much we may be naturally inclined to imagine that simplicity and identity.
+            The comparison of the theatre must not mislead us: it is nothing but a bundle of different perceptions which constitute the mind.
+          </p>
+        </section>
+
+        <section class="page" data-page="1" data-chapter="II" aria-label="Chapter 2, page 1" hidden>
+          <p>
+            Personal identity, for philosophers, consists in one of two things: in consciousness or in substance.
+            Those who place it in consciousness may mean consciousness of the present moment only, or consciousness of past actions and sentiments.
+            The question resolves itself into this: what constitutes the identity we ascribe to the mind of man?
+          </p>
+        </section>
+
       </article>
+
+      <nav id="page-nav" aria-label="Page navigation">
+        <button id="prev-page" aria-label="Previous page" style="display: none;">Previous</button>
+        <span id="page-indicator" aria-hidden="true"></span>
+        <button id="next-page" aria-label="Next page" style="display: none;">Next</button>
+      </nav>
+
     </main>
 
     <section id="sidebar" aria-hidden="true">
       <div id="notes" aria-labelledby="notes-heading">
         <h2 id="notes-heading">Annotations</h2>
-        <ul id="annotation-list" aria-label="Your annotations">
+
+        <div id="chapter-filter" role="group" aria-label="Filter by chapter"></div>
+
+        <ul id="annotation-list" aria-label="Your annotations" aria-live="polite">
           <li>No annotations yet.</li>
         </ul>
       </div>
     </section>
-
   </div>
 
   <dialog id="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-sentence">
     <h2 id="dialog-title">Add annotation</h2>
-
     <p class="sr-only" id="sentence-label">Selected sentence:</p>
     <blockquote id="dialog-sentence" aria-labelledby="sentence-label"></blockquote>
+    <p id="dialog-location" class="hint"></p>
 
     <form id="annotation-form" novalidate>
       <div class="form-group">
-        <label for="note">Your thoughts</label>
-        <textarea id="note" name="note" rows="4" aria-describedby="note-textbox"></textarea>
-        <p id="note-hint" class="hint">Type your thoughts or record your voice below.</p>
+        <label for="note">Your note</label>
+        <textarea id="note" name="note" rows="4" aria-describedby="note-hint"></textarea>
+        <p id="note-hint" class="hint">Type a note or record your voice below.</p>
       </div>
-
       <div class="form-group">
-        <button type="button" id="record-btn">Record voice </button>
+        <button type="button" id="record-btn">Record voice note</button>
         <p id="record-status" aria-live="polite" class="hint"></p>
       </div>
-
       <div class="form-actions">
-        <button type="button" id="save-btn" aria-label="Save annotation">Save</button>
+        <button type="button" id="save-btn">Save</button>
         <button type="button" id="cancel-btn">Cancel</button>
       </div>
     </form>
   </dialog>
 
-  <div id="live-region" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+  <div id="live-region" role="status" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
 
   <script src="script.js"></script>
 </body>
-
 </html>
