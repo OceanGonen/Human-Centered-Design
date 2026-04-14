@@ -73,3 +73,8 @@ Wilt u meerdere notities voor 1 zin kunnen hebben?
 per hoofdstuk indelen
 groter lettertype
 
+
+
+border meer op laten vallen 
+leesbaarheid omhoog
+
