@@ -302,6 +302,28 @@ article h1 {
   width: 100%;
 }
 
+/* MARK: Chapters */
+.filter-btn {
+  background: var(--button-bg);
+  color: var(--text-color);
+  border-color: var(--button-border);
+  margin-right: 0.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.85rem;
+}
+
+.filter-btn:hover {
+  background: var(--button-hover);
+}
+
+.filter-btn--active {
+  background: var(--active-color);
+  border-color: var(--highlight-color);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
 /* ── MARK: Dialoog  */
 dialog {
   max-width: 38rem;

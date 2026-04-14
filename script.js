@@ -16,6 +16,7 @@ let currentScreen    = 'text';
 let rememberedSen    = null;
 let annotations      = [];
 let activeFilter     = 'all';
+let activeFilterIndex = 0;
 
 const pages = Array.from(document.querySelectorAll('.page'));
 let currentPageIndex = 0;
@@ -30,6 +31,16 @@ function announce(text) {
 
 function currentPage() {
   return pages[currentPageIndex];
+}
+
+var romanToWord = {
+  'I': 'one', 'II': 'two', 'III': 'three', 'IV': 'four',
+  'V': 'five', 'VI': 'six', 'VII': 'seven', 'VIII': 'eight',
+  'IX': 'nine', 'X': 'ten'
+};
+
+function chapterLabel(ch) {
+  return romanToWord[ch] || ch;
 }
 
 
@@ -54,8 +65,9 @@ function showPage(index) {
   prevBtn.disabled = index === 0;
   nextBtn.disabled = index === pages.length - 1;
 
+  markAnnotatedSentences();
   announce(
-    'Chapter ' + chapter + ', page ' + pageNum + ' of ' + total + '. ' +
+    'Chapter ' + chapterLabel(chapter) + ', page ' + pageNum + ' of ' + total + '. ' +
     (sentences[0] ? sentences[0].textContent : '')
   );
   textArticle.focus();
@@ -135,7 +147,7 @@ function activateSentence(sentence) {
 function handleTextKey(e) {
   var index = sentences.indexOf(activeSentence);
 
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+  if (e.key === 'ArrowDown') {
     e.preventDefault();
     if (index < sentences.length - 1) {
       activateSentence(sentences[index + 1]);
@@ -145,7 +157,7 @@ function handleTextKey(e) {
     }
   }
 
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+  if (e.key === 'ArrowUp') {
     e.preventDefault();
     if (index > 0) {
       activateSentence(sentences[index - 1]);
@@ -155,22 +167,6 @@ function handleTextKey(e) {
       setTimeout(function () {
         if (sentences.length > 0) activateSentence(sentences[sentences.length - 1]);
       }, 50);
-    }
-  }
-
-  if (e.key === 'PageDown') {
-    e.preventDefault();
-    if (currentPageIndex < pages.length - 1) {
-      currentPageIndex++;
-      showPage(currentPageIndex);
-    }
-  }
-
-  if (e.key === 'PageUp') {
-    e.preventDefault();
-    if (currentPageIndex > 0) {
-      currentPageIndex--;
-      showPage(currentPageIndex);
     }
   }
 
@@ -190,16 +186,33 @@ function initAnnotationsNav() {
 }
 
 function handleAnnotationKey(e) {
+  var filterBtns = Array.from(chapterFilter.querySelectorAll('.filter-btn'));
+  var focusOnFilter = document.activeElement && document.activeElement.classList.contains('filter-btn');
+
+  // ArrowLeft / ArrowRight navigate filter buttons
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    var next = e.key === 'ArrowRight'
+      ? (activeFilterIndex + 1) % filterBtns.length
+      : (activeFilterIndex - 1 + filterBtns.length) % filterBtns.length;
+    activeFilterIndex = next;
+    filterBtns[next].click();
+    filterBtns[next].focus();
+    return;
+  }
+
+  // ArrowUp / ArrowDown navigate annotation cards
+  if (focusOnFilter) return;
   var cards = visibleCards();
   if (cards.length === 0) return;
 
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+  if (e.key === 'ArrowDown') {
     e.preventDefault();
     var index = cards.indexOf(activeCard);
     activateCard(cards[(index + 1) % cards.length]);
   }
 
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+  if (e.key === 'ArrowUp') {
     e.preventDefault();
     var index = cards.indexOf(activeCard);
     activateCard(cards[(index - 1 + cards.length) % cards.length]);
@@ -223,7 +236,7 @@ function activateCard(card) {
 
   var ann = annotations.find(function (a) { return a.id === card.dataset.annId; });
   if (ann) {
-    announce('Chapter ' + ann.chapter + ', page ' + ann.page + '. ' + ann.sentence);
+    announce('Chapter ' + chapterLabel(ann.chapter) + ', page ' + ann.page + '. ' + ann.sentence);
   }
 }
 
@@ -385,8 +398,21 @@ saveBtn.addEventListener('click', function () {
   closeDialog();
   renderAnnotationList();
   renderChapterFilter();
+  markAnnotatedSentences();
   announce('Annotation saved.');
+  switchScreen();
 });
+
+
+// ── Mark annotated sentences in DOM
+
+function markAnnotatedSentences() {
+  sentences.forEach(function (s) {
+    var text = s.textContent.trim();
+    var isAnnotated = annotations.some(function (a) { return a.sentence.trim() === text; });
+    s.classList.toggle('annotated', isAnnotated);
+  });
+}
 
 
 // ── Chapter filter
@@ -406,9 +432,12 @@ function renderChapterFilter() {
     btn.setAttribute('aria-pressed', String(activeFilter === value));
     btn.addEventListener('click', function () {
       activeFilter = value;
+      var allBtns = Array.from(chapterFilter.querySelectorAll('.filter-btn'));
+      activeFilterIndex = allBtns.indexOf(this);
       renderAnnotationList();
       renderChapterFilter();
       announce(announceText);
+      annotationsSec.focus();
     });
     chapterFilter.appendChild(btn);
   }
@@ -416,7 +445,7 @@ function renderChapterFilter() {
   makeFilterBtn('All', 'all', 'Showing all annotations.');
 
   allChapters().forEach(function (ch) {
-    makeFilterBtn('Chapter ' + ch, ch, 'Filter: chapter ' + ch + '.');
+    makeFilterBtn('Chapter ' + ch, ch, 'Filter: chapter ' + chapterLabel(ch) + '.');
   });
 }
 
@@ -517,12 +546,43 @@ function renderAnnotationList() {
 }
 
 
-// ── Alt+A: switch screens
+// ── Global shortcuts (document-level, work regardless of focus)
 
 document.addEventListener('keydown', function (e) {
-  if (e.altKey && e.key === 'a') {
-    e.preventDefault();
-    switchScreen();
+  var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+  var inInput = tag === 'textarea' || tag === 'input';
+  var inDialog = dialogEl.open;
+
+  // ArrowRight / PageDown: next page. ArrowLeft / PageUp: previous page.
+  // Skip when annotations panel has focus — left/right are used for filter buttons there.
+  var inAnnotations = currentScreen === 'annotations';
+  if (!inInput && !inDialog && !inAnnotations) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+      e.preventDefault();
+      if (currentPageIndex < pages.length - 1) {
+        currentPageIndex++;
+        showPage(currentPageIndex);
+      }
+      return;
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      if (currentPageIndex > 0) {
+        currentPageIndex--;
+        showPage(currentPageIndex);
+      }
+      return;
+    }
+  }
+
+  // Q: switch between text and annotations (screenreader-safe, no Alt needed)
+  // Alt+A kept as fallback for users whose screenreader doesn't intercept it
+  if (!inInput && !inDialog) {
+    if (e.key === 'q' || e.key === 'Q' || (e.altKey && e.key === 'a')) {
+      e.preventDefault();
+      switchScreen();
+      return;
+    }
   }
 });
 
