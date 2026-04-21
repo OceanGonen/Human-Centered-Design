@@ -73,3 +73,19 @@ Wilt u meerdere notities voor 1 zin kunnen hebben?
 per hoofdstuk indelen
 groter lettertype
 
+
+<img width="1891" height="858" alt="image" src="https://github.com/user-attachments/assets/a04844d2-14c4-4fb4-ae54-63770ce4b549" />
+<img width="1896" height="840" alt="image" src="https://github.com/user-attachments/assets/3f5435d5-0b5a-4f97-9bb5-1ed2ac9c5a8d" />
+
+
+Testbevindingen (sessie 3)
+Roger kon goed navigeren. De pijltjestoetsen voor zinnen en pagina's voelden intuïtief. Vier verbeterpunten kwamen naar voren:
+
+- Focusborder — bij het wisselen tussen leesgebied en annotaties was niet duidelijk waar hij zich bevond.
+- Highlight blijft staan — de blauwe kaartachtergrond bleef zichtbaar na terugkeren naar het leesgebied, was verwarrend waar de focus lag. 
+- Edit-knop niet bereikbaar — alleen via muis, niet via toetsenbord.
+- Lettertype te klein — voor Roger's verminderd zicht was de tekst te klein.
+
+<img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/27a3b06e-79c4-42fe-9081-bcc65d70c3c6" />
+
+
