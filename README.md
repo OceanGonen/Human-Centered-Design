@@ -89,3 +89,6 @@ Roger kon goed navigeren. De pijltjestoetsen voor zinnen en pagina's voelden int
 <img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/27a3b06e-79c4-42fe-9081-bcc65d70c3c6" />
 
 
+<img width="798" height="619" alt="image" src="https://github.com/user-attachments/assets/1e160d74-e0d9-47fa-abf3-4b75a85ad1c8" />
+
+
