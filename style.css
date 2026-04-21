@@ -1,10 +1,17 @@
+@property --a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes snake {
+  to { --a: 180deg; }
+}
+
 :root{
     --main-highlight-color: #4da6ff;
     --main-active-color: #fff3b0; 
-
     --sidebar-background: #f5f4f0;
-
-    /* Color variables */
     --bg-color: #faf9f7;
     --text-color: #1a1a1a;
     --muted-color: #666;
@@ -25,13 +32,11 @@
     --button-bg: #fff;
     --button-border: #bbb;
     --button-hover: #f5f4f0;
-
     --record-text: #cc2200;
     --record-hover: #fff5f3;
     --record-active: #cc2200;
 }
 
-/* Dark mode */
 .dark {
     --bg-color: #1a1a1a;
     --text-color: #faf9f7;
@@ -46,23 +51,17 @@
     --kbd-bg: #444;
     --kbd-border: #777;
     --sentence-hover: #3a3a3a;
-     --annotation-bg: #656565;    
+    --annotation-bg: #656565;    
     --annotation-border: #888;
     --dialog-bg: #333;
     --button-bg: #333;
     --button-border: #666;
     --button-hover: #444;
     --record-text: #f5a623;
---record-hover: #2a2010;
---record-active: #f5a623;
+    --record-hover: #2a2010;
+    --record-active: #f5a623;
 }
 
-
-
-
- 
-
-/* ── MARK: Screenreader-only */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -74,7 +73,6 @@
   border: 0;
 }
 
-/* ── MARK: Basis  */
 *,
 *::before,
 *::after {
@@ -84,7 +82,7 @@
 body {
   margin: 0;
   font-family: Georgia, serif;
-  font-size: 1.125rem;
+  font-size: 1.3rem;
   line-height: 1.8;
   color: var(--text-color);
   background: var(--bg-color);
@@ -107,7 +105,6 @@ body {
   top: 0;
 }
 
-/* ── MARK: Header */
 #controls {
   background: var(--controls-bg);
   border-bottom: 1px solid var(--controls-border);
@@ -117,7 +114,7 @@ body {
   color: var(--text-color);
 }
 
-#controls p:first-of-type{
+#controls p:first-of-type {
   font-weight: 700;
   font-size: 1rem;
 }
@@ -132,30 +129,72 @@ body {
   font-family: monospace;
 }
 
-/* ── MARK: Layout  */
 .layout {
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 0;
-  min-height: calc(100vh - 4rem);
+  min-height: 100vh;
+
 }
 
+
+
 main {
+  position: relative;
   padding: 2rem;
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
 }
 
-#notes {
+#sidebar {
+  position: relative;
   padding: 1rem;
-  position: sticky;
-  top: 0;
-  height: calc(100vh - 4rem); 
-  overflow-y: auto;
-  background: var(--sidebar-bg);
+  background-color: var(--sidebar-bg);
 }
 
-/* ── MARK: Tekst  */
+main:focus-within::before,
+#sidebar:focus-within::before {
+  content: '';
+  position: absolute;
+  inset: 1rem;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 1rem;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--a),
+    transparent 0deg,
+    transparent 10deg,
+    var(--main-highlight-color) 20deg,
+    var(--main-highlight-color) 180deg,
+    transparent 180deg,
+    transparent 190deg,
+    var(--main-highlight-color) 200deg,
+    var(--main-highlight-color) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: snake 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main:focus-within::before,
+  #sidebar:focus-within::before {
+    animation: none;
+  }
+}
+
+#text:focus {
+  outline: none;
+}
+
+#notes:focus {
+  outline: none;
+}
+
 article h1 {
   font-size: 1.75rem;
   margin-bottom: 0.25rem;
@@ -169,14 +208,15 @@ article h1 {
   margin-bottom: 2rem;
 }
 
-/* ── MARK: Literatuur veld */
-#text:focus {
-  outline: 3px solid var(--main-highlight-color);
-  outline-offset: 10px;
-  border-radius: 3px ;
+#notes {
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 4rem);
+  overflow-y: auto;
+  background: var(--sidebar-bg);
 }
 
-/* ── MARK: Zinnen  */
 .sentence {
   cursor: pointer;
   border-left: 4px solid transparent;
@@ -190,47 +230,30 @@ article h1 {
   background: var(--sentence-hover);
 }
 
-/* Actieve zin: */
-/* Werkt via JS-class, niet :focus — zodat het ook met screenreader zichtbaar is */
 .sentence.active {
   background: var(--active-color);
   border-left-color: var(--highlight-color);
   border-radius: 0 9px 9px 0;
 }
 
-/* Al geannoteerd:  */
 .sentence.annotated {
-  /* border-bottom: 2px dashed var(--highlight-color); */
   &::before {
     content: "";
     display: inline-block;
     width: 1em;
     height: 1em;
     margin-left: 6px;
-    vertical-align: middle;
+    margin-right: 6px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='30' rx='20' ry='13' fill='%234da6ff'/%3E%3Cellipse cx='18' cy='36' rx='11' ry='9' fill='%234da6ff'/%3E%3Cellipse cx='46' cy='36' rx='11' ry='9' fill='%234da6ff'/%3E%3Cellipse cx='32' cy='40' rx='18' ry='9' fill='%234da6ff'/%3E%3Ccircle cx='20' cy='52' r='4' fill='%234da6ff'/%3E%3Ccircle cx='27' cy='57' r='3' fill='%234da6ff'/%3E%3Ccircle cx='33' cy='60' r='2' fill='%234da6ff'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
+  }
 }
-} 
-#page-nav{
+
+#page-nav {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
-}
-.sentence.active.annotated {
-}
-
-/* ── MARK: Annotaties sectie  */
-#sidebar{
-    padding: 2rem;
-    background-color: var(--sidebar-bg);
-}
-
-#notes:focus {
-  outline: 3px solid var(--highlight-color);
-  outline-offset: 2px;
-  border-radius: 10px ;
 }
 
 #notes h2 {
@@ -245,7 +268,7 @@ article h1 {
 }
 
 .annotation-zin {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   color: #FFF;
   font-style: italic;
   border-left: 3px solid var(--highlight-color);
@@ -256,12 +279,10 @@ article h1 {
 .annotation-card {
   background: var(--annotation-bg);
   border: 1px solid var(--annotation-border);
-  /* border-left: 4px solid var(--main-highlight-color); */
   border-radius: 4px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
 }
-
 
 .annotation-card.active {
   outline: 3px solid var(--highlight-color);
@@ -293,7 +314,7 @@ article h1 {
 
 .annotation-text {
   margin: 0.5rem 0 0;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .annotation-card audio {
@@ -302,7 +323,6 @@ article h1 {
   width: 100%;
 }
 
-/* MARK: Chapters */
 .filter-btn {
   background: var(--button-bg);
   color: var(--text-color);
@@ -324,7 +344,6 @@ article h1 {
   font-weight: 600;
 }
 
-/* ── MARK: Dialoog  */
 dialog {
   max-width: 38rem;
   width: 92%;
@@ -359,7 +378,6 @@ dialog h2 {
   border-radius: 0 4px 4px 0;
 }
 
-/* ── MARK: Formulier  */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -393,7 +411,6 @@ dialog h2 {
   margin: 0.35rem 0 0;
 }
 
-/* ── MARK: Knoppen  */
 button {
   padding: 0.5rem 1.1rem;
   font-size: 0.95rem;
@@ -436,7 +453,6 @@ button:focus {
   background: var(--record-hover);
 }
 
-/* Tijdens opname: rode achtergrond als visuele waarschuwing */
 #record-btn[data-recording="true"] {
   background: var(--record-active);
   color: var(--text-color);
@@ -448,7 +464,6 @@ button:focus {
   50%       { opacity: 0.7; }
 }
 
-/* Theme toggle */
 #theme-toggle {
   margin-left: auto;
   display: block;
@@ -476,4 +491,24 @@ button:focus {
   gap: 0.6rem;
   margin-top: 1.5rem;
   flex-wrap: wrap;
+}
+
+main:not(:focus-within) .sentence.active {
+  background: var(--sentence-hover);
+  border-left-color: var(--border-color);
+}
+
+#sidebar:not(:focus-within) .annotation-card.active {
+  background-color: var(--sentence-hover);
+  outline-color: var(--border-color);
+}
+
+.edit-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.annotation-card.active .edit-btn {
+  opacity: 1;
+  pointer-events: auto;
 }

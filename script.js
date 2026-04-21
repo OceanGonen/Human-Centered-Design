@@ -17,6 +17,7 @@ let rememberedSen    = null;
 let annotations      = [];
 let activeFilter     = 'all';
 let activeFilterIndex = 0;
+let suppressNextFocusAnnounce = false;
 
 const pages = Array.from(document.querySelectorAll('.page'));
 let currentPageIndex = 0;
@@ -70,6 +71,7 @@ function showPage(index) {
     'Chapter ' + chapterLabel(chapter) + ', page ' + pageNum + ' of ' + total + '. ' +
     (sentences[0] ? sentences[0].textContent : '')
   );
+  suppressNextFocusAnnounce = true;
   textArticle.focus();
 }
 
@@ -126,6 +128,10 @@ function buildSentences(page) {
   }
 
   textArticle.addEventListener('focus', function () {
+    if (suppressNextFocusAnnounce) {
+      suppressNextFocusAnnounce = false;
+      return;
+    }
     if (activeSentence) announce(activeSentence.textContent);
   });
 }
@@ -189,7 +195,6 @@ function handleAnnotationKey(e) {
   var filterBtns = Array.from(chapterFilter.querySelectorAll('.filter-btn'));
   var focusOnFilter = document.activeElement && document.activeElement.classList.contains('filter-btn');
 
-  // ArrowLeft / ArrowRight navigate filter buttons
   if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
     e.preventDefault();
     var next = e.key === 'ArrowRight'
@@ -201,7 +206,6 @@ function handleAnnotationKey(e) {
     return;
   }
 
-  // ArrowUp / ArrowDown navigate annotation cards
   if (focusOnFilter) return;
   var cards = visibleCards();
   if (cards.length === 0) return;
@@ -222,6 +226,12 @@ function handleAnnotationKey(e) {
     e.preventDefault();
     jumpToPage(activeCard);
   }
+
+  if ((e.key === 'e' || e.key === 'E') && activeCard) {
+    e.preventDefault();
+    var ann = annotations.find(function (a) { return a.id === activeCard.dataset.annId; });
+    if (ann) openEditDialog(ann);
+  }
 }
 
 function visibleCards() {
@@ -236,11 +246,21 @@ function activateCard(card) {
 
   var ann = annotations.find(function (a) { return a.id === card.dataset.annId; });
   if (ann) {
-    announce('Chapter ' + chapterLabel(ann.chapter) + ', page ' + ann.page + '. ' + ann.sentence);
+    announce('Chapter ' + chapterLabel(ann.chapter) + ', page ' + ann.page + '. ' + ann.sentence + '. Press E to edit.');
+  }
+}
+
+function clearActiveCard() {
+  if (activeCard) {
+    activeCard.classList.remove('active');
   }
 }
 
 annotationsSec.addEventListener('focus', function () {
+  if (suppressNextFocusAnnounce) {
+    suppressNextFocusAnnounce = false;
+    return;
+  }
   var cards = visibleCards();
   if (cards.length > 0) {
     activateCard(activeCard && cards.includes(activeCard) ? activeCard : cards[0]);
@@ -270,8 +290,12 @@ function jumpToPage(card) {
     var target = sentences.find(function (s) {
       return s.textContent.trim() === ann.sentence.trim();
     });
-    if (target) activateSentence(target);
-    else announce('Page loaded. Sentence no longer found.');
+    if (target) {
+      suppressNextFocusAnnounce = true;
+      activateSentence(target);
+    } else {
+      announce('Page loaded. Sentence no longer found.');
+    }
   }, 80);
 }
 
@@ -339,6 +363,8 @@ function resetRecording() {
 }
 
 function openAnnotationDialog() {
+  deleteBtn.style.display = 'none';
+
   var page = currentPage();
   dialogSenEl.textContent = activeSentence.textContent;
   dialogLocEl.textContent = 'Chapter ' + page.dataset.chapter + ', page ' + page.dataset.page;
@@ -350,6 +376,7 @@ function openAnnotationDialog() {
 }
 
 function openEditDialog(ann) {
+  deleteBtn.style.display = '';
   dialogSenEl.textContent = ann.sentence;
   dialogLocEl.textContent = 'Chapter ' + ann.chapter + ', page ' + ann.page;
   noteTextarea.value = ann.note;
@@ -399,8 +426,9 @@ saveBtn.addEventListener('click', function () {
   renderAnnotationList();
   renderChapterFilter();
   markAnnotatedSentences();
-  announce('Annotation saved.');
+  suppressNextFocusAnnounce = true;
   switchScreen();
+  announce('Annotation saved.');
 });
 
 
@@ -437,6 +465,7 @@ function renderChapterFilter() {
       renderAnnotationList();
       renderChapterFilter();
       announce(announceText);
+      suppressNextFocusAnnounce = true;
       annotationsSec.focus();
     });
     chapterFilter.appendChild(btn);
@@ -468,7 +497,6 @@ function renderAnnotationList() {
     return;
   }
 
-  // Group by chapter
   var groups = {};
   filtered.forEach(function (ann) {
     if (!groups[ann.chapter]) groups[ann.chapter] = [];
@@ -492,11 +520,9 @@ function renderAnnotationList() {
         var article = document.createElement('article');
         article.className = 'annotation-card';
         article.dataset.annId = ann.id;
+        // No aria-label — announce() handles all reading when navigating to a card
         article.setAttribute('tabindex', '-1');
-        article.setAttribute('aria-label',
-          'Chapter ' + ann.chapter + ', page ' + ann.page + '. ' +
-          ann.sentence.slice(0, 60)
-        );
+        article.setAttribute('aria-hidden', 'true');
 
         var location = document.createElement('p');
         location.className = 'annotation-location';
@@ -525,9 +551,10 @@ function renderAnnotationList() {
         }
 
         var editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
+        editBtn.textContent = 'Edit  [E]';
         editBtn.className = 'edit-btn';
         editBtn.setAttribute('aria-label', 'Edit annotation on page ' + ann.page);
+        editBtn.setAttribute('tabindex', '-1');
         editBtn.addEventListener('click', function (e) {
           e.stopPropagation();
           openEditDialog(ann);
@@ -546,16 +573,14 @@ function renderAnnotationList() {
 }
 
 
-// ── Global shortcuts (document-level, work regardless of focus)
+// ── Global shortcuts
 
 document.addEventListener('keydown', function (e) {
   var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
   var inInput = tag === 'textarea' || tag === 'input';
   var inDialog = dialogEl.open;
-
-  // ArrowRight / PageDown: next page. ArrowLeft / PageUp: previous page.
-  // Skip when annotations panel has focus — left/right are used for filter buttons there.
   var inAnnotations = currentScreen === 'annotations';
+
   if (!inInput && !inDialog && !inAnnotations) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown') {
       e.preventDefault();
@@ -575,8 +600,6 @@ document.addEventListener('keydown', function (e) {
     }
   }
 
-  // Q: switch between text and annotations (screenreader-safe, no Alt needed)
-  // Alt+A kept as fallback for users whose screenreader doesn't intercept it
   if (!inInput && !inDialog) {
     if (e.key === 'q' || e.key === 'Q' || (e.altKey && e.key === 'a')) {
       e.preventDefault();
@@ -591,11 +614,19 @@ function switchScreen() {
   if (currentScreen === 'text') {
     rememberedSen = activeSentence;
     currentScreen = 'annotations';
+    if (activeSentence) {
+      activeSentence.classList.remove('active');
+      activeSentence.classList.add('remembered');
+    }
     sidebar.removeAttribute('aria-hidden');
     annotationsSec.focus();
   } else {
     currentScreen = 'text';
     sidebar.setAttribute('aria-hidden', 'true');
+    clearActiveCard();
+    if (rememberedSen) {
+      rememberedSen.classList.remove('remembered');
+    }
     if (rememberedSen) activateSentence(rememberedSen);
     textArticle.focus();
   }
@@ -609,3 +640,23 @@ document.addEventListener('DOMContentLoaded', function () {
   initAnnotationsNav();
   renderChapterFilter();
 });
+
+
+
+var deleteBtn = document.getElementById('delete-btn');
+
+deleteBtn.addEventListener('click', function () {
+  if (!editAnnotId) return;
+  annotations = annotations.filter(function (a) { return a.id !== editAnnotId; });
+  closeDialog();
+  renderAnnotationList();
+  renderChapterFilter();
+  markAnnotatedSentences();
+  activeCard = null;
+  announce('Annotation deleted.');
+});
+
+
+// in openAnnotationDialog:
+deleteBtn.style.display = 'none';
+
