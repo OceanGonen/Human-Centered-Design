@@ -68,7 +68,10 @@ Na de eerste test ben ik aan de slag gegaan met Dark mode, aangezien wit licht e
 <img width="1915" height="898" alt="image" src="https://github.com/user-attachments/assets/42d17039-9277-4417-8582-a9b8ff2ed9c2" />
 <img width="1859" height="792" alt="image" src="https://github.com/user-attachments/assets/f608ded8-24a9-4975-bec8-d874135ce2e7" />
 
-Ik heb ook de meta data van het litertuur, pagina en hoofd toegevoegd 
+Ik heb ook de meta data van het litertuur, pagina en hoofdstuk toegevoegd en de manier om te navigeren door de pagina's met alleen de pijltoetsen.
+
+<img width="1087" height="781" alt="image" src="https://github.com/user-attachments/assets/44d7c8f8-f575-4a06-98c2-ece74dc94efc" />
+
 
 ## Dinsdag 07/04
 ### 2de User test met Roger
@@ -85,7 +88,8 @@ Na de tweede test ben ik aan de slag gegaan met een paar dingen. Als subtiel det
 <img width="1896" height="840" alt="image" src="https://github.com/user-attachments/assets/3f5435d5-0b5a-4f97-9bb5-1ed2ac9c5a8d" />
 
 
-Testbevindingen (sessie 3)
+## Dinsdag 14/04
+### 3de User test met Roger
 Roger kon goed navigeren. De pijltjestoetsen voor zinnen en pagina's voelden intuïtief. Vier verbeterpunten kwamen naar voren:
 
 - Focusborder — bij het wisselen tussen leesgebied en annotaties was niet duidelijk waar hij zich bevond.
@@ -93,9 +97,13 @@ Roger kon goed navigeren. De pijltjestoetsen voor zinnen en pagina's voelden int
 - Edit-knop niet bereikbaar — alleen via muis, niet via toetsenbord.
 - Lettertype te klein — voor Roger's verminderd zicht was de tekst te klein.
 
+Na de derde test waren er een aantal verwarrende momenten opgevallen. Het was niet altijd duidelijk in welk gedeelte Roger zich bevond, dus heb ik een geanimeerde focusborder toegevoegd die rond het actieve gebied beweegt. Ook bleef de highlight op een annotatie staan nadat hij terugkeerde naar de leestekst, wat verwarrend was, dat is nu opgelost. De edit-knop was alleen bereikbaar met de muis, dus die is nu ook te bedienen met de E-toets op het toetsenbord. En het lettertype is wat groter gezet, want de tekst was gewoon te klein voor Roger.
+
 <img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/27a3b06e-79c4-42fe-9081-bcc65d70c3c6" />
 
 
 <img width="798" height="619" alt="image" src="https://github.com/user-attachments/assets/1e160d74-e0d9-47fa-abf3-4b75a85ad1c8" />
 
-
+## Dinsdag 21/04
+### 4de User test met Roger
+Na de vierde test was Roger over het algemeen erg tevreden. De navigatie voelde goed aan en hij kon vlot door de pagina's bewegen. Een fijn moment om te zien dat de aanpassingen van de vorige sessies echt het verschil maken. Als 1 puntje vond Roger de tekst nog steeds wat te klein op sommige elementen. Vooral binnen de annotatie kaart. 
