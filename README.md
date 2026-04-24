@@ -3,16 +3,22 @@
 Dit project draait om de ontwikkeling van een toegankelijke annotatietool, specifiek ontworpen vanuit de principes van Human Centered Design voor Roger. Roger is een filosoof met maculadegeneratie die volledig afhankelijk is van een screenreader. Zijn wens is filosofische teksten lezen en per zin aantekeningen kunnen maken in de vorm van tekst of spraakopnames.
 
 ## Maandag 30/03
+
+Vandaag heb ik het fundement van deze tool neergezet. Aangezien ik Roger nog niet heb ontmoet, heb ik nog niet zijn persoonlijke functies of wensen kunnen toevoegen. Maar ik heb met een aantal aannames wel wat navigatie shortcuts geimplementeerd en design keuzes gemaakt op basis van persoonlijke aannames.
 <img width="1321" height="791" alt="image" src="https://github.com/user-attachments/assets/9090f089-7061-4faa-9df5-a220fa8d6236" />
 
 <img width="1317" height="796" alt="image" src="https://github.com/user-attachments/assets/074d8ce8-ab7c-4069-9797-27189796e143" />
 
+
+
+
+Om de leeservaring voor Roger zo rustig mogelijk te houden, is de tekst opgedeeld in losse zinnen, elk verpakt in een eigen p-element. De volledige applicatie is voorzien van de role="application". Dit is een bewuste technische keuze: hierdoor vangen we de pijltjestoetsen direct op in de browser, in plaats van dat de schermlezer deze gebruikt voor zijn eigen navigatie commando's.
+
+Met de boven en onder pijltjestoetsen kan Roger nu door de zinnen op en neer navigeren. Zodra hij op een zin landt, wordt deze gehighlight met een gele achtergrond en een blauwe rand aan de linkerkant. Voor de auditieve feedback gebruiken we een aria-live="polite" regio. Dit zorgt ervoor dat de schermlezer de zin direct voorleest zonder storende extra informatie zoals "1 van de 80", wat de aandacht van de filosofische inhoud zou weghalen.
+
+Heb nog een beetje styling toegevoegd, vooral voor de lay out.
+
 ![Top of Webpage](image.png)
-Vandaag heb ik het fundement van deze tool neergezet. Aangezien ik Roger nog niet heb ontmoet, heb ik nog niet zijn persoonlijke functies of wensen kunnen toevoegen. Maar ik heb met een aantal aannames wel wat navigatie shortcuts geimplementeerd en design keuzes gemaakt.
-
-Om de leeservaring voor Roger zo rustig mogelijk te houden, is de tekst opgedeeld in losse zinnen, elk verpakt in een eigen <p>-element. De volledige applicatie is voorzien van de role="application". Dit is een bewuste technische keuze: hierdoor vangen we de pijltjestoetsen direct op in de browser, in plaats van dat de schermlezer deze gebruikt voor zijn eigen navigatie commando's.
-
-Met de pijltjestoetsen kan Roger nu door de zinnen bladeren. Zodra hij op een zin landt, wordt deze visueel gemarkeerd met een gele achtergrond en een blauwe rand aan de linkerkant. Voor de auditieve feedback gebruiken we een aria-live="polite" regio. Dit zorgt ervoor dat de schermlezer de zin direct voorleest zonder storende extra informatie zoals "1 van de 80", wat de concentratie op de filosofische inhoud zou ontnemen.
 
 De eerste interface is opgebouwd uit twee kolommen: de tekst/literatuur aan de linkerkant en de annotaties aan de rechterkant. Het annotatiepaneel werkt volgens exact dezelfde logica als de tekstsectie. Met de pijltjestoetsen navigeer je tussen de verschillende 'kaarten' met aantekeningen, en met een druk op Enter open je een kaart om deze te bewerken. Beide panelen krijgen een duidelijke blauwe omlijning wanneer ze gefocust zijn, wat helpt bij de oriëntatie.
 
@@ -20,15 +26,15 @@ Het toevoegen van een annotatie is simpel gehouden. Wanneer Roger op een zin sta
 ![Dialog popup to create annotations](image-1.png)
 
 
-Hier kan hij een tekstnotitie typen of een spraakbericht opnemen. Na het opslaan verschijnt de annotatie als een kaart in het rechterpaneel. Bestaande annotaties kunnen op dezelfde intuïtieve manier worden geopend en gewijzigd.
+Hier kan hij een tekstnotitie typen of een spraakbericht opnemen. Na het opslaan verschijnt de annotatie als een kaart in het rechterpaneel. Bestaande annotaties kunnen op dezelfde manier worden geopend en gewijzigd.
 ![Annotation navigation](image-2.png)
 
 
-Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplementeerd:
+Dit zijn de eerste set vaste sneltoetsen dien ik heb geïmplementeerd:
 
 - Pijltjestoetsen: Navigeren door zinnen of annotatiekaarten.
   
-- Enter: Annotatie creeren op een geselecteerde zin;  of een annotatie kaart openen om te bewerken.
+- Enter: Annotatie creeren op een geselecteerde zin.
 
 - Alt + A: Snel schakelen tussen de tekst en de annotaties.
 
@@ -56,23 +62,24 @@ Om de efficiëntie te verhogen, hebben we een set vaste sneltoetsen geïmplement
 - Contextuele Annotaties: Elke annotatie wordt gekoppeld aan de specifieke zin in de literatuur. (Wanneer de gebruiker over een geannoteerde zin "hovert" (of deze selecteert), wordt direct zichtbaar dat er een notitie bij hoort)
 
 
-## Dinsdag 07/04
+
+Na de eerste test ben ik aan de slag gegaan met Dark mode, aangezien wit licht erg onprettig is voor Roger. En de spraakopname zit er nu ook in, zodat hij zijn notities kan inspreken in plaats van typen.
 
 <img width="1915" height="898" alt="image" src="https://github.com/user-attachments/assets/42d17039-9277-4417-8582-a9b8ff2ed9c2" />
-
-per jaar ingedeeld naar boeken 
-hij reist veel en wilt graag op mobiel kunnen gebruiken.
-
-
-Wat wilt u dat er gebeurt als je op een geannoteerde zin weer op enter klikt?
-Hoe wilt u dat geannoteerde zinnen gemarkeerd worden?
-Wilt u meerdere notities voor 1 zin kunnen hebben?
-
 <img width="1859" height="792" alt="image" src="https://github.com/user-attachments/assets/f608ded8-24a9-4975-bec8-d874135ce2e7" />
 
-per hoofdstuk indelen
-groter lettertype
+Ik heb ook de meta data van het litertuur, pagina en hoofd toegevoegd 
 
+## Dinsdag 07/04
+### 2de User test met Roger
+**Belangrijkste Bevindingen**
+- Navigatie: De Enter-toets als snelkoppeling voor het aanmaken van annotaties voelt intuïtief en werd positief ontvangen.
+  
+- Annotatiestrategie: Eén zin annoteren is voldoende voor Roger, mits de context snel teruggevonden kan worden via hoofdstuk en paginanummer.
+  
+- Leesbaarheid: Het lettertype was te klein voor comfortabel gebruik gegeven zijn beperkte gezichtsscherpte.
+
+Na de tweede test ben ik aan de slag gegaan met een paar dingen. Als subtiel detail heb ik een denkwolkje toegevoegd naast zinnen die al geannoteerd zijn, wat Roger een erg leuk detail vond. Daarnaast heb ik gewerkt aan het terugvinden van annotaties: ze zijn nu gegroepeerd per hoofdstuk en je kan er op filteren. Deze navigeer je met de pijltoetsen op dezelfde manier als de literatuur sectie. Leek mij makkelijk voor Roger omdat het consistent is.
 
 <img width="1891" height="858" alt="image" src="https://github.com/user-attachments/assets/a04844d2-14c4-4fb4-ae54-63770ce4b549" />
 <img width="1896" height="840" alt="image" src="https://github.com/user-attachments/assets/3f5435d5-0b5a-4f97-9bb5-1ed2ac9c5a8d" />
