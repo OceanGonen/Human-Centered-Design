@@ -106,4 +106,9 @@ Na de derde test waren er een aantal verwarrende momenten opgevallen. Het was ni
 
 ## Dinsdag 21/04
 ### 4de User test met Roger
-Na de vierde test was Roger over het algemeen erg tevreden. De navigatie voelde goed aan en hij kon vlot door de pagina's bewegen. Een fijn moment om te zien dat de aanpassingen van de vorige sessies echt het verschil maken. Als 1 puntje vond Roger de tekst nog steeds wat te klein op sommige elementen. Vooral binnen de annotatie kaart. 
+Na de vierde test was Roger over het algemeen erg tevreden. De navigatie voelde goed aan en hij kon vlot door de pagina's bewegen. Een fijn moment om te zien dat de aanpassingen van de vorige sessies echt het verschil maken. Als 2 laatste puntjes vond Roger de tekst nog steeds wat te klein op sommige elementen, v ooral binnen de annotatie kaart en
+Het lettertype was nog steeds iets te klein, en het contrast moest nog iets beter. Uiteindelijk heb ik toch de highlight kleur veranderd van blauw naar geel,
+aangezien dat na testen het beste resultaat bleek. 
+
+<img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/dae4b964-47a2-494d-b355-9934b5d35ff0" />
+
