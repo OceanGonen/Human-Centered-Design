@@ -112,3 +112,18 @@ aangezien dat na testen het beste resultaat bleek.
 
 <img width="1916" height="912" alt="image" src="https://github.com/user-attachments/assets/dae4b964-47a2-494d-b355-9934b5d35ff0" />
 
+
+## Exclusive Design Princibles
+
+Dit project is gebouwd volgens de **Exclusive Design** principes van Vasilis van Gemert. In plaats van te ontwerpen voor een breed publiek, is alles hier gemaakt voor één specifieke persoon: Roger.
+
+**Study situation** — Elke testsessie begon met observeren. Hoe gebruikt Roger zijn screenreader? Welke toetsen gebruikt hij? Waar loopt hij vast? Pas na die observaties heb ik aanpassingen gedaan. Zo bleek bijvoorbeeld dat Alt+A niet werkte omdat toets combinaties in het algemeen voor Roger lastig waren. Ik heb diezelfde functie uiteindelijk gekoppeld aan de enkelvoudige toets 'Q', wat een stuk makkelijker was voor Roger om mee te navigeren.
+ — iets wat je alleen ontdekt door echt te testen.
+
+**Ignore conventions** — Een standaard webpagina werkt met Tab-navigatie, links, knoppen en een muis. Hier is dat volledig losgelaten. De pijltoetsen navigeren zinnen en pagina's, Enter maakt een annotatie, Q wisselt tussen de twee werkruimtes. Bijna geen enkel conventioneel principe is gevolgd omdat deze vaak niet van toepassing zijn voor Roger.
+
+**Prioritise identity** — Roger is filosoof. Hij leest Hume. Hij annoteert spaarzaam en wil snel terug kunnen naar een specifieke gedachte. De tool is daar volledig op afgestemd: geen afleidende opmaak, geen onnodige features, wel een directe terugkoppeling per hoofdstuk en pagina. Dark mode staat standaard aan omdat hij witlicht gevoelig is.
+
+**Add nonsense** — Het denkwolkje naast geannoteerde zinnen is zo'n moment. Functioneel niet noodzakelijk — de zin is al gemarkeerd via de klasse — maar het voegt iets toe dat past bij wie Roger is. Een filosoof die denkt. En de bewegende snake border rond de actieve werkruimte is ook buiten de gebaande paden: geen standaard focusring, maar iets dat je niet snel op een andere pagina ziet.
+
+> Vasilis van Gemert — *Exclusive Design*, HvA: [https://exclusive-design.vasilis.nl](https://exclusive-design.vasilis.nl)
